@@ -1,0 +1,174 @@
+﻿@model FooterModel
+@using Nop.Core
+@using Nop.Core.Domain.Tax
+@using Nop.Core.Infrastructure
+@using Nop.Web.Models.Common;
+
+<div class="site-footer">
+    <div class="main-footer">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 footer-box-mobile">
+                <div class="col-md-2 col-xs-6 footer-box">
+                    <h3>@T("Footer.Information")</h3>
+                    <ul>
+                        @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
+                        {
+                            <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                        }
+                        <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-xs-6 footer-box">
+                    <h3>@T("Footer.CustomerService")</h3>
+                    <ul>
+                        @*<li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a> </li>*@
+                        @if (Model.NewsEnabled)
+                        {
+                        <li><a href="@Url.RouteUrl("NewsArchive")">@T("News")</a></li>
+                        }
+                        @if (Model.BlogEnabled)
+                        {
+                        <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
+                        }
+                        @if (Model.ForumEnabled)
+                        {
+                        <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
+                        }
+                        @if (Model.RecentlyViewedProductsEnabled)
+                        {
+                        <li><a href="@Url.RouteUrl("RecentlyViewedProducts")">@T("Products.RecentlyViewedProducts")</a></li>
+                        }
+                        @if (Model.CompareProductsEnabled)
+                        {
+                        <li><a href="@Url.RouteUrl("CompareProducts")">@T("Products.Compare.List")</a></li>
+                        }
+                        @if (Model.NewProductsEnabled)
+                        {
+                        <li><a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a></li>
+                        }
+                        @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn2).ToList())
+                        {
+                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="col-md-3 col-xs-6 footer-box">             
+                        <h3>@T("Footer.MyAccount")</h3>               
+                    <ul>
+                        <li><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a></li>
+                        <li><a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a></li>
+                        <li><a href="@Url.RouteUrl("CustomerAddresses")">@T("Account.CustomerAddresses")</a></li>
+                        @if (Model.ShoppingCartEnabled)
+                        {
+                            <li><a href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")</a></li>
+                        }
+                        @if (Model.WishlistEnabled)
+                        {
+                            <li><a href="@Url.RouteUrl("Wishlist")">@T("Wishlist")</a></li>
+                        }
+                        @if (Model.AllowCustomersToApplyForVendorAccount)
+                        {
+                            <li><a href="@Url.RouteUrl("ApplyVendorAccount")">@T("Vendors.ApplyAccount")</a></li>
+                        }
+                        @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
+                        {
+                            <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                        }
+                    </ul>
+                </div>
+                @*<div class="col-md-2 col-xs-6 footer-box">
+                        <h3>@T("Footer.Collection")</h3>
+                        <ul>
+                            <li><a href="/all-bags">All Bags</a></li>
+                            <li><a href="/briefcases">Briefcases</a></li>
+                            <li><a href="/messenger-bags">Messenger Bags</a></li>
+                            <li><a href="/travel-bags">Travel Bags</a></li>
+                            <li><a href="/for-her">For Her</a></li>
+                            <li><a href="/look-book">Look Book</a></li>
+                        </ul>
+                    </div>*@
+                @*<div class="col-md-2 col-xs-6 footer-box">
+                        <h3>@T("Footer.Accessories")</h3>
+                        <ul>
+                            <li><a href="/padfolios-and-journals">Padfolios and Journals</a></li>
+                            <li><a href="/business-card-cases">Business Card Cases</a></li>
+                            <li><a href="/money-clips">Money Clips</a></li>
+                            <li><a href="/wallets">Wallets</a></li>
+                            <li><a href="/tablet-cases-and-sleeves">Tablet Cases and Sleeves</a></li>
+                            <li><a href="/travel-kits">Travel Kits</a></li>
+                            <li><a href="/passport-cases">Passport Cases</a></li>
+                            <li><a href="/wine-gifts">Wine Gifts</a></li>
+                            <li><a href="/misc-gifts">Misc Gifts</a></li>
+                        </ul>
+                    </div>*@
+                <div class="col-md-2 col-xs-6 footer-box">
+                    <h3>@T("Footer.FollowUs")</h3>
+                    <div class="social-links">
+                        @Html.Action("Social", "Common")
+                    </div>
+                </div>
+				 <!-- <div class="col-md-3 col-xs-6 footer-box-mobile">
+					@Html.Action("NewsletterBox", "Newsletter")
+				</div> -->
+				 <div class="col-md-3 col-xs-12">
+					@Html.Action("NewsletterBox", "Newsletter")
+				</div>
+            </div>
+           
+        </div>
+    </div>
+    <div class="copyright">
+        <p>
+            @T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+        @if (Model.DisplayTaxShippingInfoFooter)
+        {
+            var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
+            <span class="footer-tax-shipping">
+                @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
+            </span>
+        }
+        <a href="#">Terms &amp; Conditions</a>
+    </p>
+</div>
+@Html.Widget("footer")
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.footer-block .title').click(function () {
+            var e = window, a = 'inner';
+            if (!('innerWidth' in window)) {
+                a = 'client';
+                e = document.documentElement || document.body;
+            }
+            var result = { width: e[a + 'Width'], height: e[a + 'Height'] };
+            if (result.width < 769) {
+                $(this).siblings('.list').slideToggle('slow');
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.block .title').click(function () {
+            var e = window, a = 'inner';
+            if (!('innerWidth' in window)) {
+                a = 'client';
+                e = document.documentElement || document.body;
+            }
+            var result = { width: e[a + 'Width'], height: e[a + 'Height'] };
+            if (result.width < 1001) {
+                $(this).siblings('.listbox').slideToggle('slow');
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(window).scroll(function () {
+        if ($(".site-header").offset().top > $(".site-banner").height()) {
+            $(".navbar-fixed-top").addClass("header-collapse");
+        } else {
+            $(".navbar-fixed-top").removeClass("header-collapse");
+        }
+    });
+</script>

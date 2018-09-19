@@ -1,0 +1,27 @@
+.jcarousel-wrapper{position:relative; padding:0 30px;}
+.jcarousel{position:relative; overflow:hidden; width:100%;}
+.jcarousel ul{width:20000em; position:relative; list-style:none; margin:0; padding:0;}
+.jcarousel li{width:150px; float:left; border:1px solid #e4e4e4; margin-right:15px; cursor:pointer;}
+.jcarousel li:hover{border-color:#ccc;}
+.jcarousel img{display:block; max-width:100%; height:auto!important; margin:0 auto;}
+.jcarousel-control-next,.jcarousel-control-prev{position:absolute; top:50%; margin-top:-13px; display:block; text-indent:-999em; width:14px; height:25px; background:url(../images/slider-nav1.png) no-repeat;}
+.jcarousel-control-prev{left:0; background-position:left top;}
+.jcarousel-control-next{right:0; background-position:right top;}
+.jcarousel-control-prev:hover{background-position:left bottom;}
+.jcarousel-control-next:hover{background-position:right bottom;}
+
+
+
+/*Home Page Product Slider*/
+.jcarousel-related-wrapper{position:relative; padding:0 30px;}
+.jcarousel-related{position:relative; overflow:hidden; width:100%;}
+.jcarousel-related ul{width:20000em; position:relative; list-style:none; margin:0; padding:0;}
+.jcarousel-related li{width:305px; float:left; margin-right:15px; cursor:pointer;}
+.jcarousel-related img{display:block; max-width:100%; height:auto!important; margin:0 auto;}
+
+
+.jcarousel-related-control-next,.jcarousel-related-control-prev{position:absolute; top:50%; margin-top:-13px; display:block; text-indent:-999em; width:14px; height:25px; background:url(../images/slider-nav1.png) no-repeat;}
+.jcarousel-related-control-prev{left:0; background-position:left top;}
+.jcarousel-related-control-next{right:0; background-position:right top;}
+.jcarousel-related-control-prev:hover{background-position:left bottom;}
+.jcarousel-related-control-next:hover{background-position:right bottom;}

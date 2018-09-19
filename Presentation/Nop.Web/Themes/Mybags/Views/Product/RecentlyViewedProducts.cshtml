@@ -1,0 +1,86 @@
+﻿@model IList<ProductOverviewModel>
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.RecentlyViewedProducts").Text);
+}
+@using Nop.Web.Models.Catalog;
+<div class="center-1"> 
+	<div class="breadcrumb">
+			<ul>
+				<li>
+					<span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+						<a href="@Url.RouteUrl("HomePage")" itemprop="url">
+							<span itemprop="title">@T("Products.Breadcrumb.Top")</span>
+						</a>
+					</span>
+				</li>
+				<li class="current-item">
+					@T("Recently viewed products")      
+				</li>
+			</ul>
+	</div>
+	
+	<div class="page-body">
+        @if (Model.Count > 0)
+        {
+			
+				<div class="">
+				<div class="topic-title" id="ph-title">
+					<h2>@T("Products.RecentlyViewedProducts")</h2>
+				</div>
+					<div class="productView">
+						<div class="product-grid">
+							<div class="product-listing-section">
+								<div class="product-container">
+									<ul>
+										@foreach (var product in Model)
+										{
+											<li>
+												@Html.Partial("_ProductBox", product)
+											</li>
+										}
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+        }
+    </div>
+	
+	
+	<!-- <div class="container">
+		<div class="row">
+			<div class="topic-title" id="ph-title">
+				<h2>@T("Products.RecentlyViewedProducts")</h2>
+			</div>
+			<div class="productView">
+				<div class="product-grid">
+					<div class="product-listing-section">
+					<div class="product-container">
+						<ul>
+							
+						</ul>
+					</div>
+						@if (Model.Count > 0)
+						{
+							<div class="product-list">
+								@foreach (var product in Model)
+								{
+									<div class="offer offer-default">
+										@Html.Partial("_ProductBox", product)
+									</div>
+								}
+							</div>
+						}
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div> -->
+</div>
+
+

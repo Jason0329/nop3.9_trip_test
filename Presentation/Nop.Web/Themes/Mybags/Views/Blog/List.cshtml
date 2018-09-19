@@ -1,0 +1,126 @@
+﻿@model BlogPostListModel
+@using Nop.Web.Extensions;
+@using Nop.Web.Models.Blogs;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Blog").Text);
+}
+
+<div class="center-1">
+    <div class="breadcrumb">
+        <div class="">
+            <ul>
+                <li>
+                    <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                        <a href="@Url.RouteUrl("HomePage")" itemprop="url">
+                            <span itemprop="title">@T("Products.Breadcrumb.Top")</span>
+                        </a>
+                    </span>
+                </li>
+                <li class="current-item">
+                    @T("Blog")
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="">
+        <div class="">
+            <div class="page topic-page" id="ph-topic">
+                <div class="topic-title" id="ph-title">
+                    <h2>Blog</h2>
+                </div>
+            </div>
+        </div>
+        @Html.Widget("bloglist_page_before_posts")
+        <div class="blogContainer">          
+            <div class="col-sm-4 rightColumn">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="#">Photo Gallery</a></li>
+                </ul>
+                <div class="gall-img">
+                    <a href="#" class="post-thumbnail"><img src="http://borlino.notesguru.in/Content/Images/blog/Borlino_OneNightStand.jpg"></a>
+                </div>     
+                @Html.Widget("left_side_column_blog_before")
+                @Html.Action("BlogMonths", "Blog")
+                @Html.Widget("left_side_column_after_blog_archive")
+                @Html.Action("BlogTags", "Blog")
+                @Html.Widget("left_side_column_blog_after")
+            </div>
+
+            @foreach (var item in Model.BlogPosts)
+            {  <div class="col-sm-4"></div>
+                <div class="col-md-8 leftColumn">
+                    <div id="postlist">
+                        <div class="blogRepeater">
+                            <div class="titleBlog">
+                                <div class="text-center">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h3 class="pull-left"><a href="@Url.RouteUrl("BlogPost", new { SeName = item.SeName })">@item.Title</a></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-slide">
+                                <div class="post-img">       
+                                    <img class="img-responsive" src="~/Themes/Mybags/Content/images/Mybags-5.jpg" />
+                                    <div class="over-layer">
+                                        <ul class="post-link">
+                                            <li><a href="#" class="fa fa-link"></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="blogPostContent">
+                                    @Html.Raw(item.Body)
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        @*<a href="#" class="read-more">Read more</a>*@
+                                        @if (item.Tags.Count > 0)
+                                        {
+                                            <div class="tags">
+                                                <label><strong>@T("Blog.Tags"):</strong></label>
+
+                                                @for (int i = 0; i < item.Tags.Count; i++)
+                                                {
+                                                    var tag = item.Tags[i];
+                                                    <a class="blueColor" href="@Url.RouteUrl("BlogByTag", new { tag = tag })">@tag</a>
+                                                    if (i != item.Tags.Count - 1)
+                                                    {
+                                                        <span class="separator">,</span>
+                                                    }
+                                                }
+
+                                            </div>
+                                        }
+                                        @if (item.AllowComments)
+                                        {
+                                            <div class="blog-details">
+                                                <a href="@Url.RouteUrl("BlogPost", new { SeName = item.SeName })">
+                                                    <strong> @string.Format(T("Blog.CommentsLink").Text, item.NumberOfComments)</strong>
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h5 class="pull-right"><span>@item.CreatedOn.ToString("D")</span></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            }
+            @Html.Widget("bloglist_page_after_posts")
+        </div>
+    </div>
+</div>
+
+
+
+

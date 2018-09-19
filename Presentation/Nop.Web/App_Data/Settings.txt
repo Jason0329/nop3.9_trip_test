@@ -1,0 +1,2 @@
+DataProvider: sqlserver
+DataConnectionString: Data Source=DESKTOP-3HKLFNN\SQLEXPRESS;Initial Catalog=Nop3.9Test;Integrated Security=True;Persist Security Info=False

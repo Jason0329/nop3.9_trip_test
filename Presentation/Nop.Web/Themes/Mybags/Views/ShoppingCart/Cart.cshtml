@@ -1,0 +1,35 @@
+﻿@model ShoppingCartModel
+@using Nop.Web.Models.Checkout
+@using Nop.Web.Models.ShoppingCart;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.ShoppingCart").Text);
+}
+<div class="breadcrumb">
+    <ul>
+        <li>
+            <a href="@Url.RouteUrl("HomePage")" title="@T("Categories.Breadcrumb.Top")">@T("Categories.Breadcrumb.Top")</a>
+        </li>
+        <li class="active">@T("ShoppingCart")</li>
+    </ul>
+</div>
+@if (!Model.OnePageCheckoutEnabled)
+{
+    @Html.Action("CheckoutProgress", "Checkout", new {step = CheckoutProgressStep.Cart})
+}
+<div class="container">
+	<div class="row">
+		<div class="cartWrapper">
+			<div class="page shopping-cart-page">
+    <div class="topic-title">
+        <h2>@T("ShoppingCart")</h2>
+    </div>
+    <div class="page-body">
+        @Html.Partial("OrderSummary", Model)
+    </div>
+</div>
+		</div>
+	</div>
+</div>

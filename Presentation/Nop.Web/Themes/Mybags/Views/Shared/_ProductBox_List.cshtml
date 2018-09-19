@@ -1,0 +1,211 @@
+﻿@model ProductOverviewModel
+@using Nop.Core
+@using Nop.Core.Domain.Orders
+@using Nop.Core.Domain.Tax
+@using Nop.Core.Infrastructure
+@using Nop.Web.Models.Catalog;
+@using System.Globalization
+@{
+    //prepare "Add to cart" AJAX link
+    string addtocartlink = "";
+    var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
+    var quantity = 1;
+    if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
+    }
+    else
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
+    }
+
+    var addtowishlistlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
+    var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
+}
+
+<!-- <div class="product-item product-box" data-productid="@Model.Id"></div> -->
+<div class="listViewContainer">
+	<div class="row">
+		<div class="product-item product-box" data-productid="@Model.Id">
+			<div class="col-md-4">
+                <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
+                    <div class="first-box">
+                        <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
+                    
+                    </div>
+                    <div class="second-box">
+                        <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
+                        <div class="second-product-text">
+                            <h4>@Model.Name</h4>
+                            @if (!String.IsNullOrWhiteSpace(Model.ShortDescription))
+                            {
+                                <p>@MvcHtmlString.Create(Model.ShortDescription.Length > 50 ? @Model.ShortDescription.ToString().Substring(0, 50) + "... <span>" + @T("see.more") + "</span>" : @Model.ShortDescription.ToString()) .</p>
+                            }
+                        </div>
+                    </div>
+                </a>
+			</div>
+			<div class="col-md-4">
+				<a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
+					<div class="first-box">
+						<div class="first-product-text middleText">
+							<h3>@Model.Name</h3>
+							@if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+							{
+								<span class="price old-price">@Model.ProductPrice.OldPrice</span>
+							}
+							<p class="product-price">@Model.ProductPrice.Price</p>
+                            @{
+                                int ratingPercent = 0;
+                                if (Model.ReviewOverviewModel.TotalReviews != 0)
+                                {
+                                    ratingPercent = ((Model.ReviewOverviewModel.RatingSum * 100) / Model.ReviewOverviewModel.TotalReviews) / 5;
+                                }
+                            }
+                            @if (Model.ReviewOverviewModel.AllowCustomerReviews)
+                            {
+                                <div class="product-reviews-overview" @if (Model.ReviewOverviewModel.TotalReviews > 0) { <text> itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" </text>    }>
+
+                                    <div class="ratings">
+                                        <div class="rating-box">
+                                            <div style="width: @(ratingPercent)%">
+                                            </div>
+                                        </div>
+										
+                                       @if (Model.ReviewOverviewModel.TotalReviews > 0)
+                                        {
+
+                                            <p>
+                                                <a href="@Url.RouteUrl("ProductReviews", new { productId = Model.Id })">
+                                                    @Model.ReviewOverviewModel.TotalReviews
+                                                    @T("Reviews.Overview.Reviews")
+                                                </a> | <a href="@Url.RouteUrl("ProductReviews", new { productId = Model.Id })">@T("Reviews.Overview.AddNew")</a>
+                                            </p>
+
+                                            @*hidden microdata info*@
+                                            decimal ratingValue = ratingPercent / (decimal)20;
+                                            <span itemprop="ratingValue" style="display: none;">@ratingValue.ToString("0.0", new CultureInfo("en-US"))</span>
+                                            <span itemprop="reviewCount" style="display: none;">@Model.ReviewOverviewModel.TotalReviews</span>
+                                        }
+                                        else
+                                        {
+                                            <p class="product-no-reviews">
+                                                <a href="@Url.RouteUrl("ProductReviews", new { productId = Model.Id })">@T("Reviews.Overview.First")</a>
+                                            </p>
+                                        }
+
+
+                                    </div>
+                                </div>
+                            }
+						</div>
+					</div>
+					</a>
+		</div>
+			<div class="col-md-4">
+				<div class="buttons listAddCartButton">
+					
+					@if (!Model.ProductPrice.DisableWishlistButton)
+					{
+						<input type="button" value="@T("ShoppingCart.AddToWishlist")" title="@T("ShoppingCart.AddToWishlist")" class="button-2 add-to-wishlist-button listCart-2" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink');return false;" />
+					}
+					@if (!Model.ProductPrice.DisableAddToCompareListButton)
+					{
+						<input type="button" value="@T("ShoppingCart.AddToCompareList")" title="@T("ShoppingCart.AddToCompareList")" class="button-2 add-to-compare-list-button listCart-2" onclick="AjaxCart.addproducttocomparelist('@addtocomparelink');return false;" />
+					}
+					@if (!Model.ProductPrice.DisableBuyButton)
+					{
+						var addToCartText = T("ShoppingCart.AddToCart").Text;
+						if (Model.ProductPrice.IsRental)
+						{
+							addToCartText = T("ShoppingCart.Rent").Text;
+						}
+						if (Model.ProductPrice.AvailableForPreOrder)
+						{
+							addToCartText = T("ShoppingCart.PreOrder").Text;
+						}
+						<input type="button" value="@(addToCartText)" class="button-2 product-box-add-to-cart-button listCart-1" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;" />
+					}
+					
+				</div>  
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+    @*<div class="picture">
+            <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
+
+            </a>
+        </div>
+        <div class="details">
+            <h2 class="product-title">
+                <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })">@Model.Name</a>
+            </h2>
+            @if (Model.ReviewOverviewModel.AllowCustomerReviews)
+            {
+                int ratingPercent = 0;
+                if (Model.ReviewOverviewModel.TotalReviews != 0)
+                {
+                    ratingPercent = ((Model.ReviewOverviewModel.RatingSum * 100) / Model.ReviewOverviewModel.TotalReviews) / 5;
+                }
+            <div class="product-rating-box" title="@string.Format(T("Reviews.TotalReviews").Text, Model.ReviewOverviewModel.TotalReviews)">
+                <div class="rating">
+                    <div style="width: @(ratingPercent)%">
+                    </div>
+                </div>
+            </div>
+            }
+            <div class="description">
+                @Html.Raw(Model.ShortDescription)
+            </div>
+            <div class="add-info">
+                @Html.Widget("productbox_addinfo_before", Model.Id)
+                <div class="prices">
+                    @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+                    {
+                    <span class="price old-price">@Model.ProductPrice.OldPrice</span>
+                    }
+                    <span class="price actual-price">@Model.ProductPrice.Price</span>
+                    @if (Model.ProductPrice.DisplayTaxShippingInfo)
+                    {
+                        var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
+                        //tax info is already included in the price (incl/excl tax). that's why we display only shipping info here
+                        //of course, you can modify appropriate locales to include VAT info there
+                    <span class="tax-shipping-info">
+                        @T(inclTax ? "Products.Price.TaxShipping.InclTax" : "Products.Price.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
+                    </span>
+                        }
+                </div>
+                @Html.Widget("productbox_addinfo_middle", Model.Id)
+                <div class="buttons">
+                   <input type="button" value="@T("Products.Details")" class="button-1 product-box-detail-button" onclick="setLocation('@Url.RouteUrl("Product", new { SeName = Model.SeName })')" />
+                    @if (!Model.ProductPrice.DisableBuyButton)
+                    {
+                        var addToCartText = T("ShoppingCart.AddToCart").Text;
+                        if (Model.ProductPrice.IsRental)
+                        {
+                            addToCartText = T("ShoppingCart.Rent").Text;
+                        }
+                        if (Model.ProductPrice.AvailableForPreOrder)
+                        {
+                            addToCartText = T("ShoppingCart.PreOrder").Text;
+                        }
+                    <input type="button" value="@(addToCartText)" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;" />
+                    }
+                    @if (!Model.ProductPrice.DisableAddToCompareListButton)
+                    {
+                    <input type="button" value="@T("ShoppingCart.AddToCompareList")" title="@T("ShoppingCart.AddToCompareList")" class="button-2 add-to-compare-list-button" onclick="AjaxCart.addproducttocomparelist('@addtocomparelink');return false;" />
+                    }
+                    @if (!Model.ProductPrice.DisableWishlistButton)
+                    {
+                    <input type="button" value="@T("ShoppingCart.AddToWishlist")" title="@T("ShoppingCart.AddToWishlist")" class="button-2 add-to-wishlist-button" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink');return false;" />
+                    }
+                </div>
+                @Html.Widget("productbox_addinfo_after", Model.Id)
+            </div>
+        </div>*@
+

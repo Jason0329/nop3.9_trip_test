@@ -1,0 +1,74 @@
+﻿.header-menu .sublist{background-color:#f6f6f6;left:0; border-top: 5px solid #869098; width: 100%;padding:0; box-sizing:border-box;}
+.header-menu .sublist li{float:left;}
+.header-menu .sublist li a:before{display:none;} 
+.header-menu .sublist li:hover > a{background-color: transparent;}
+.header-menu .sublist li.sec_submenu{width:75%;}
+.header-menu .sublist li.ad-block{background:#fff; padding:10px; box-sizing:border-box;width:25%;}
+.header-menu .sublist li.ad-block a{padding:0;}
+.header-menu .sublist li.ad-block img{width:100%;height: auto;}
+.header-menu .sublist li ul.sublist{position:static;display: block;padding: 0 0 0 20px;}
+.header-menu .sublist li ul.sublist li {display: inline;width: 100%;}
+.header-menu .sublist.first-level li.sec_submenu {padding:20px;}
+.header-menu .sublist.first-level li.sec_submenu ul{margin:0; padding:0;}
+.header-menu .sublist.first-level li.sec_submenu ul li{margin: 0 0 15px;display: inline-block;width: 25%;padding-right: 4%;list-style: none;}
+.header-menu .sublist.first-level li.sec_submenu ul li a{padding: 0 0 10px;color: #6f767b;font-size: 14px;display: block;border-bottom: 1px solid #cccccc;text-transform: none;}
+.header-menu .sublist.first-level li.sec_submenu ul li a:hover{border-color:#4ab2f1;color:#4ab2f1;}
+
+/*Menu Css*/
+.site-navigation{position: relative; z-index: 5; max-width: 100%; margin:0 auto 0px auto; padding:0 15px;}
+.menu-toggle{display: none;}
+.site-navigation .sublist-toggle{ display:inline-block; margin:0 0 0 2px; padding:0;  vertical-align:middle; }
+.site-navigation .sublist-toggle:before{content: ' \25BC'; color: #aeaeae; font-size: 10px; line-height: 6px; }
+.site-navigation > ul.top-menu{ font-size:0; position:relative; border-radius:0px; margin-top:0px; padding-left:0; margin-bottom:0; text-align: center;}
+.site-navigation > ul.top-menu > li{ padding:0 20px; display:inline-block; }
+.site-navigation > ul.top-menu > li > a, .site-navigation > ul.top-menu > li > span{}
+.site-navigation > ul.top-menu > li > a{border-bottom:0px solid transparent; color: #b4b3b3; display: block; font-size: 13px; line-height: 32px; padding: 0; text-transform: uppercase; text-decoration:none; display:inline-block; vertical-align:middle;}
+.site-navigation .sublist{ display: none; position: absolute; width: 100%; box-shadow:0 10px 5px rgba(0,0,0,0.1); background-color: #FFFFFF; padding:0px 0; text-align: left; box-sizing: border-box; border-top:1px solid #dadada; left: 0; border-radius:0px;}
+.site-navigation > ul.top-menu > li:hover > a:hover{ color:#848180;}
+.site-navigation ul.top-menu li:hover > .sublist {display: block;}
+.site-navigation .sublist li{ float: left;   position: relative;}
+.site-navigation .sublist li.ad-block{background:#FFFFFF; padding: 10px; box-sizing: border-box; width: 25%; text-align:center; list-style-type: none; }
+.site-navigation .sublist.first-level li.sec_submenu {padding:0px;}
+.site-navigation .sublist li.sec_submenu {width: 75%; list-style-type: none;}
+.site-navigation .sublist.first-level li.sec_submenu ul:after{ content:""; display:table; clear:both; width:100%; margin:0; padding:0;}
+.site-navigation .sublist.first-level li.sec_submenu ul li {margin: 0 0 0px; display: inline-block; width: 25%; padding-right:4%; list-style: none;}
+.site-navigation .sublist.first-level li.sec_submenu ul li a {padding:10px 0px;  font-size: 13px; display: block; text-transform: none; color:#848180; border-bottom:1px solid #dadada; max-width:100%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; text-transform:uppercase;}
+.site-navigation .sublist.first-level li.sec_submenu ul li a:hover { background-color:#FFFFFF;  color: #b4b3b3; border-bottom-color:#dadada;}
+.site-navigation > ul.mobile {display: none;}
+.site-navigation ul.top-menu ul li a{ border:0; padding:0;}
+.site-navigation ul.top-menu ul{ text-align:left; padding-left:0;}
+.site-navigation ul.top-menu ul li:hover a, .site-navigation ul.top-menu ul li.current a{ background-color:transparent; }
+
+@media only screen and (max-width:1000px){
+.header-menu .sublist{overflow: hidden;}
+.top-menu .sublist li{margin:0;}
+.header-menu .sublist li.ad-block {background: #e2e2e2;}
+.header-menu .sublist li.ad-block a{text-align: center;}
+.header-menu .sublist li.ad-block img {width: auto;height: auto;max-width: 100%;}
+.header-menu .sublist.first-level li.sec_submenu{padding:0;}
+.header-menu .sublist.first-level li.sec_submenu ul li {width: 100%;padding: 0;margin:0;}
+.header-menu .sublist.first-level li.sec_submenu ul li a{padding:10px 10px 10px 10px;}
+.header-menu .sublist.first-level li.sec_submenu ul li a:before{content:"\203A";display:inline-block;}
+.header-menu .sublist.first-level li.sec_submenu ul li:last-child a {border-bottom: 0;}
+.header-menu .sublist li.ad-block, .header-menu .sublist li.sec_submenu{width:100%;}
+
+
+.site-navigation > ul.top-menu{ display:none;}
+.site-navigation .menu-toggle{ display:block; font-size:15px; line-height:1; padding:10px; background-color:#b15c2b; color:#FFFFFF; border-radius:0px; cursor:pointer; margin:10px 0; border:0px solid #dadada; position:relative;}
+.site-navigation .menu-toggle:after{  display:block; position:absolute; right:10px; top:7px; font-size: 20px; content: ' \2261'; cursor:pointer;}
+.sublist-toggle{ display:block; position:absolute; right:0px; top:9px; width:17px; height:17px; cursor:pointer;}
+.sublist-toggle:before{content: ' \21C5'; font-size: 20px; color: #FFF; position: absolute; top: 0; right: 0px; line-height: 12px;}
+.site-navigation > ul.top-menu.mobile{ margin-top:0; text-align:left;}
+.site-navigation > ul.top-menu.mobile > li{ display:block; position:relative; padding: 0 0; border-bottom:1px solid #dadada;}
+.site-navigation > ul.top-menu.mobile > li > a{ padding:0 0px;}
+.site-navigation .top-menu.mobile .sublist li.ad-block{ width:100%;}
+.site-navigation .top-menu.mobile .sublist.first-level li.sec_submenu{ display:block; width:100%; background-color:#F5F5F5;}
+.site-navigation .top-menu.mobile .sublist{ position:relative;}
+.site-navigation .top-menu.mobile ul:after{ content:""; display:table; clear:both; width:100%;}
+.site-navigation ul.top-menu.mobile li > .sublist{ position:relative; display:none; border-color:transparent; box-shadow:none;}
+.site-navigation ul.top-menu.mobile .sublist.first-level li.sec_submenu ul{ background-color:transparent; padding:0px 0px;}
+.site-navigation .top-menu.mobile .sublist.first-level li.sec_submenu ul li{ margin:0; padding:0; width:100%; border-top:1px solid #dadada;}
+.site-navigation ul.top-menu.mobile .sublist.first-level li.sec_submenu ul li a{  border-bottom:0; font-size: 11px; padding: 5px 10px;}
+
+.site-navigation .sublist-toggle::before{right: 0px; top: 5px;}
+}

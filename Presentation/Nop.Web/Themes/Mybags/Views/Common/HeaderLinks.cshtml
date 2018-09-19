@@ -1,0 +1,88 @@
+﻿@model HeaderLinksModel
+@using Nop.Web.Models.Common;
+<div class="header-links">
+    <ul>
+        @Html.Widget("header_links_before")
+        @if (Model.IsAuthenticated)
+        {
+            <li class="user">
+                <a href="@Url.RouteUrl("CustomerInfo")">
+                    <i class="fa fa-user"></i><span>@Model.CustomerName</span>
+                </a>
+            </li>
+            <li class="logout">
+                <a href="@Url.RouteUrl("Logout")">
+                    <i class="fa fa-power-off"></i><span>@T("Account.Logout")</span>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="register">
+                <a href="@Url.RouteUrl("Register")">
+                    <i class="fa fa-user-plus"></i><span>@T("Account.Register")</span>
+                </a>
+            </li>
+            <li class="login">
+                <a href="@Url.RouteUrl("Login")">
+                    <i class="fa fa-sign-in"></i><span>@T("Account.Login")</span>
+                </a>
+            </li>
+        }
+        @if (Model.AllowPrivateMessages)
+        {
+            <li>
+                <a href="@Url.RouteUrl("PrivateMessages", new { tab = "" })">
+                    <span>@T("PrivateMessages.Inbox")</span>
+                    <span>@Model.UnreadPrivateMessages</span>
+                </a>
+            </li>
+        }
+        @if (Model.WishlistEnabled)
+        {
+            <li>
+                <a href="@Url.RouteUrl("Wishlist")">
+                    <i class="fa fa-heart"></i><span>@T("Wishlist")</span><span class="wishlist-qty">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
+                </a>
+            </li>
+        }
+        @if (Model.ShoppingCartEnabled)
+        {
+            <li id="topcartlink">
+                <a href="@Url.RouteUrl("ShoppingCart")">
+                    <i class="fa fa-shopping-bag"></i><span>Cart</span><span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
+</a>
+                @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+            </li>
+        }
+        @Html.Widget("header_links_after")
+    </ul>
+    @if (Model.AllowPrivateMessages && !string.IsNullOrEmpty(Model.AlertMessage))
+    {
+        //new private message notification
+        <script type="text/javascript">
+            $(document).ready(function () {
+                displayPopupNotification('@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.AlertMessage))', 'success', false);
+            });
+        </script>
+    }
+    @if (Model.ShoppingCartEnabled)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.header').on('mouseenter', '#topcartlink', function () {
+                    $('.flyout-cart').addClass('active');
+                });
+                $('.header').on('mouseleave', '#topcartlink', function () {
+                    $('.flyout-cart').removeClass('active');
+                });
+                $('.header').on('mouseenter', '.flyout-cart', function () {
+                    $('.flyout-cart').addClass('active');
+                });
+                $('.header').on('mouseleave', '.flyout-cart', function () {
+                    $('.flyout-cart').removeClass('active');
+                });
+            });
+        </script>
+    }
+</div>

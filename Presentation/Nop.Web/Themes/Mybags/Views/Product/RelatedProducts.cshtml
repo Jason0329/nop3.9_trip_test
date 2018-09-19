@@ -1,0 +1,36 @@
+﻿@model IList<ProductOverviewModel>
+
+@using Nop.Web.Models.Catalog;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Framework.Themes
+@{
+    var themeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
+
+   // Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/product-slider.css", themeName));
+    Html.AppendScriptParts(string.Format("~/Themes/{0}/Content/js/jcarousel.responsive.js", themeName));
+    Html.AppendScriptParts(string.Format("~/Themes/{0}/Content/js/jquery.jcarousel.min.js", themeName));
+
+
+}
+
+@if (Model.Count > 0)
+{
+    <div class="center-header">
+        <h3>@T("Products.RelatedProducts")</h3>
+    </div>
+    <div class="other-products jcarousel-related-wrapper">
+        <div class="jcarousel-related">
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <div class="item-box other-products-box">@Html.Partial("_ProductBox_Related", item)</div>
+                    </li>
+
+                }
+            </ul>
+        </div>
+        <a href="#" class="jcarousel-related-control-prev">&lsaquo;</a>
+        <a href="#" class="jcarousel-related-control-next">&rsaquo;</a>
+    </div>
+}
